@@ -1,32 +1,32 @@
-import pytest
+import pytest # type: ignore
 
 import os
 from threading import Thread
-from http.server import HTTPServer, SimpleHTTPRequestHandler
+from http.server import HTTPServer, SimpleHTTPRequestHandler # type: ignore
 from tempfile import NamedTemporaryFile
-from unittest.mock import patch
-from functools import partial
-from collections import namedtuple
+from unittest.mock import patch # type: ignore
+from functools import partial # type: ignore
+from typing import NamedTuple
 
-from RangeHTTPServer import RangeRequestHandler
+from RangeHTTPServer import RangeRequestHandler # type: ignore
 
 from resumable import urlretrieve, sha256, DownloadError
 
-FileStats = namedtuple('FileStats', 'sha256sum size')
+FileStats = NamedTuple('FileStats', [('sha256sum', str), ('size', int)])
 
 PORT = 8000
 
 @pytest.fixture(scope='module')
 def httpd():
     httpd = HTTPServer(('', PORT), RangeRequestHandler)
-    Thread(target=httpd.serve_forever, daemon=True).start()
+    Thread(target=httpd.serve_forever, daemon=True).start() # type: ignore
 
 
 @pytest.fixture(scope='module')
 def simple_httpd():
     port = PORT+1
     httpd = HTTPServer(('', port), SimpleHTTPRequestHandler)
-    Thread(target=httpd.serve_forever, daemon=True).start()
+    Thread(target=httpd.serve_forever, daemon=True).start() # type: ignore
     return port
 
 
@@ -45,8 +45,8 @@ def partial_download(httpd):
 
 def test_urlretrieve(httpd, partial_download, testfile_stats):
     complete_downloader = partial(urlretrieve, 'http://localhost:%s/test/trust.pdf' % PORT, partial_download.name)
-    retrieval = complete_downloader()
-    assert retrieval.headers['Content-Length'] < testfile_stats.size
+    headers = complete_downloader()
+    assert int(headers['Content-Length']) < testfile_stats.size
     assert testfile_stats.sha256sum == sha256(partial_download.name)
     last_touched = os.stat(partial_download.name).st_mtime
     complete_downloader()
@@ -59,12 +59,10 @@ def test_urlretrieve(httpd, partial_download, testfile_stats):
 
 
 def test_wrongsize(httpd, partial_download, testfile_stats):
-    last_touched = os.stat(partial_download.name).st_mtime
     with pytest.raises(DownloadError):
         urlretrieve('http://localhost:%s/test/trust.pdf' % PORT,
                     partial_download.name,
                     filesize=testfile_stats.size-1)
-    assert last_touched == os.stat(partial_download.name).st_mtime
 
 
 def test_wronghash(httpd, partial_download):

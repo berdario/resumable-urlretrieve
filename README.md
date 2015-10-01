@@ -1,11 +1,10 @@
-Resumable urlretrive
+Resumable urlretrieve
 ========================
 
 [![PyPi version](http://img.shields.io/pypi/v/resumable-urlretrieve.svg)](https://pypi.python.org/pypi/resumable-urlretrieve)
 [![Build Status](https://travis-ci.org/berdario/resumable-urlretrieve.png)](https://travis-ci.org/berdario/resumable-urlretrieve)
 
 TODO
-
 
 License
 =======

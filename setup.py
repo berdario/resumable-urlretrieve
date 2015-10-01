@@ -1,6 +1,6 @@
 #! /usr/bin/env python
 
-from setuptools import setup
+from setuptools import setup # type: ignore
 
 setup(
     name='resumable-urlretrieve',
@@ -11,6 +11,7 @@ setup(
     url='https://github.com/berdario/resumable-urlretrieve',
     license='MIT License',
     packages=['resumable'],
+    install_requires=['requests'],
     include_package_data=True,
     zip_safe=False,
     classifiers=[
