@@ -82,7 +82,7 @@ def write_response(resp, filename: Path, reporthook,
                 if chunk:
                     f.write(chunk)
                     if reporthook:
-                        reporthook(i, chunk_size, remote_size)
+                        reporthook(i, chunk_size, remote_size or -1)
             f.flush()
 
 
