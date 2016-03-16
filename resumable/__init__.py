@@ -1,6 +1,5 @@
 import requests # type: ignore
 from contextlib import closing # type: ignore
-from mmap import mmap, ACCESS_READ # type: ignore
 from re import fullmatch # type: ignore
 from enum import Enum
 import hashlib
@@ -22,8 +21,18 @@ ContentRange = NamedTuple('ContentRange', [('start', int),
 
 
 def sha256(filename: path) -> str:
-    with Path(filename).open('rb') as f, mmap(f.fileno(), 0, access=ACCESS_READ) as m: # type: ignore
-        return hashlib.sha256(m).hexdigest()
+    sha = hashlib.sha256()
+
+    with Path(filename).open('rb') as f:
+        while True:
+            data = f.read(8388608)
+
+            if not data:
+                break
+
+            sha.update(data)
+    return sha.hexdigest()
+
 
 def is_download_complete(filename: Path, sha256sum: str, filesize: int) -> Any:
     D = DownloadCheck # type: Any
