@@ -22,15 +22,13 @@ ContentRange = NamedTuple('ContentRange', [('start', int),
 
 def sha256(filename: path) -> str:
     sha = hashlib.sha256()
+    chunksize = 524288
 
     with Path(filename).open('rb') as f:
-        while True:
-            data = f.read(8388608)
-
-            if not data:
-                break
-
+        data = f.read(chunksize)
+        while data:
             sha.update(data)
+            data = f.read(chunksize)
     return sha.hexdigest()
 
 
