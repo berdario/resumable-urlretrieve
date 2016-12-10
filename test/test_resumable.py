@@ -1,6 +1,8 @@
 import pytest # type: ignore
 
+import errno
 import os
+import random
 from threading import Thread
 from http.server import HTTPServer, SimpleHTTPRequestHandler # type: ignore
 from tempfile import NamedTemporaryFile
@@ -14,19 +16,32 @@ from resumable import urlretrieve, sha256, DownloadError
 
 FileStats = NamedTuple('FileStats', [('sha256sum', str), ('size', int)])
 
-PORT = 8000
+
+def get_port():
+    return random.randint(1024, 65536)
+
+
+def get_httpd(request_handler):
+    while True:
+        try:
+            port = get_port()
+            return HTTPServer(('', port), request_handler)
+
+        except OSError as e:
+            if e.errno != errno.EADDRINUSE:
+                raise
+
 
 @pytest.fixture(scope='module')
 def httpd():
-    httpd = HTTPServer(('', PORT), RangeRequestHandler)
+    httpd = get_httpd(RangeRequestHandler)
     Thread(target=httpd.serve_forever, daemon=True).start() # type: ignore
     return httpd
 
 
 @pytest.fixture(scope='module')
 def simple_httpd():
-    port = PORT+1
-    httpd = HTTPServer(('', port), SimpleHTTPRequestHandler)
+    httpd = get_httpd(SimpleHTTPRequestHandler)
     Thread(target=httpd.serve_forever, daemon=True).start() # type: ignore
     return httpd
 
