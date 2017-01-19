@@ -4,7 +4,7 @@ from setuptools import setup # type: ignore
 
 setup(
     name='resumable-urlretrieve',
-    version='0.1.3',
+    version='0.1.4',
     description='Small library to fetch files over HTTP and resuming their download',
     author='Dario Bertini',
     author_email='berdario+pypi@gmail.com',
