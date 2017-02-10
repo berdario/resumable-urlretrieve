@@ -7,11 +7,11 @@ env:
     - HOME=/home/travis
     - WORKON_HOME=$HOME/.pew
   matrix:
-    - TOXENV="py35"
+    - TOXENV="py35" PYTHON=3.5.0
 
 install:
   - pip install pew
   - mkdir $WORKON_HOME
-  - pew install 3.5.0
-  - pew new -d py35 --python=$(pew locate_python 3.5.0) -i tox -i mypy-lang
+  - pew install $PYTHON
+  - pew new -d py35 --python=$(pew locate_python $PYTHON) -i tox -i mypy-lang
 script: pew in py35 tox -e $TOXENV
