@@ -13,5 +13,5 @@ install:
   - pip install pew
   - mkdir $WORKON_HOME
   - pew install $PYTHON
-  - pew new -d py35 --python=$(pew locate_python $PYTHON) -i tox -i mypy-lang
-script: pew in py35 tox -e $TOXENV
+  - pew new -d venv --python=$(pew locate_python $PYTHON) -i tox -i mypy-lang
+script: pew in venv tox -e $TOXENV
