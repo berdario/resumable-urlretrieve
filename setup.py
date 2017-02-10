@@ -1,6 +1,13 @@
 #! /usr/bin/env python
 
+import sys
 from setuptools import setup # type: ignore
+
+requires = ['requests']
+
+if sys.version_info < (3, 5):
+    requires.append('typing')
+
 
 setup(
     name='resumable-urlretrieve',
@@ -11,7 +18,7 @@ setup(
     url='https://github.com/berdario/resumable-urlretrieve',
     license='MIT License',
     packages=['resumable'],
-    install_requires=['requests'],
+    install_requires=requires,
     include_package_data=True,
     zip_safe=False,
     classifiers=[
