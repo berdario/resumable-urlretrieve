@@ -7,7 +7,7 @@ env:
     - HOME=/home/travis
     - WORKON_HOME=$HOME/.pew
   matrix:
-    - TOXENV="py35" PYTHON=3.5.0
+    - TOXENV="py35" PYTHON=3.5.3
 
 install:
   - pip install pew
