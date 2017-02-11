@@ -11,7 +11,7 @@ if sys.version_info < (3, 5):
 
 setup(
     name='resumable-urlretrieve',
-    version='0.1.4',
+    version='0.1.5',
     description='Small library to fetch files over HTTP and resuming their download',
     author='Dario Bertini',
     author_email='berdario+pypi@gmail.com',
