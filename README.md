@@ -19,7 +19,7 @@ There are only a few differences:
 
 The `sha256sum` and `filesize` will be used (if supplied) to check the downloaded file against it, and prevent making another HTTP request in case it would have been already completed (Otherwise it'll rely on the server returned `Content-Length` and `Content-Range`).
 
-It works on Python >= 3.5.
+Tested on Python >= 3.4.
 
 License
 =======
