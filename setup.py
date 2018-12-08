@@ -3,7 +3,7 @@
 import sys
 from setuptools import setup # type: ignore
 
-requires = ['requests']
+requires = ['requests >= 2.20.0']
 
 if sys.version_info < (3, 5):
     requires.append('typing')
@@ -11,7 +11,7 @@ if sys.version_info < (3, 5):
 
 setup(
     name='resumable-urlretrieve',
-    version='0.1.5',
+    version='0.1.6',
     description='Small library to fetch files over HTTP and resuming their download',
     author='Dario Bertini',
     author_email='berdario+pypi@gmail.com',
