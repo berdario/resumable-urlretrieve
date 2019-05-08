@@ -1,3 +1,4 @@
 include tox.ini
 include test/trust*
 include README.md
+include LICENSE
