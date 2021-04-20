@@ -1,5 +1,5 @@
 requests== 2.21.0
-py==1.4.30
+py==1.10.0
 pytest==2.7.3
 rangehttpserver==1.2.0
 https://github.com/JukkaL/mypy/tarball/dcff596be878798fbd43af7b50d95c3eed7ebbc1#egg=mypy-lang
